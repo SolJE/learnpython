@@ -23,6 +23,7 @@ def enroll2(name,gender,age = 6,city = "Beijing"):
     print("city:",city)
     
 enroll(sarah,F)
-
+#默认参数可以不按顺序提供，当不按顺序提供时，需要把参数名写上
 enroll(Bob,M,7)
 enroll(Adam,M,city="Tianjin")
+
