@@ -27,3 +27,5 @@ build/
 # 但不包括 doc/server/arch.txt
 
 doc/*.txt
+\exercise\__pycache__
+

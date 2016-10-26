@@ -42,8 +42,10 @@ def repeat_mac_now(oldlist):
 def repeat_mac_total(oldlist,totallist):
     
     for mac in oldlist:
+        print(mac,"OK")
         if mac in totallist:
             totallist.remove(mac)
+    #print(totallist)
     return totallist
 
 this_path=os.getcwd()
@@ -98,11 +100,12 @@ list_mac_total=total_txt.read().replace(' ','').split()
 newlist=repeat_mac_now(list_mac_now)
 #print("%s OH,YES" % newlist)
 no_repeat_list=repeat_mac_total(newlist,list_mac_total)
-#print("%s OH,YES TOO" % no_repeat_list)
+print("%s OH,YES TOO" % no_repeat_list)
 
 #将本次对比后无语的MAC写入一份以时间命名的文件备份，并将其追加写入MAC地址统计表total.txt中
 new_txt=open('%s\\Rusut\\%s.txt' % (this_path,GetNowTime()) ,'a')
 for mac in no_repeat_list:
+    print(mac,"OK")
     new_txt.write("%s\n" % mac)
 
 new_txt.close
