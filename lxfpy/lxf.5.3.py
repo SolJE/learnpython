@@ -27,3 +27,35 @@ enroll(sarah,F)
 enroll(Bob,M,7)
 enroll(Adam,M,city="Tianjin")
 
+#默认参数不要直接使用list，若要使用需要在内部对list做初始化
+#在编写程序时，如果可以设计一个不变对象，尽量设计成不变对象，多任务环境下同时读取对象不需要加锁。
+def add_end(L = None)
+    if L if None
+        L = []
+    L.append("END")
+    return
+    
+#可变参数
+#可以用list或tuple组装成一个参数
+def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+calc([1,2,3])
+calc((1,3,5,7))    
+#利用可变参数定义函数
+#可变参数实质为多个参数在调用时自动组装为一个tuple
+def calc(*numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+calc(1,2)
+calc()
+#可以在list或tuple前加上一个*号将其转换为可变参数
+num = [1,2,3]
+calc(*num)
+
+#关键字参数
+#

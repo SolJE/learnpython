@@ -1,4 +1,4 @@
-*tmp
+﻿*tmp
 
 # 此为注释 – 将被 Git 忽略
 
@@ -28,4 +28,5 @@ build/
 
 doc/*.txt
 \exercise\__pycache__
-
+Git-2.10.1-64-bit(1).exe
+progit-zh.936.pdf
