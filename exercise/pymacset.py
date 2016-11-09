@@ -47,7 +47,7 @@ def repeat_mac_total(selfset,totallist):
 
 
 #打印本程序所以目录
-#查找程序所在目录有没有Rusut目录，若没有则新建一个用于存放对比结果
+#查找程序所在目录有没有Result目录，若没有则新建一个用于存放对比结果
 
 #print("""
 #本程序所在目录：%s
@@ -68,8 +68,8 @@ for index,item in enumerate(listfile):
     %s    %s
     """ % (index,item))
 #file_list= listfile.split()
-if os.path.isdir("Rusut") == False:
-    os.mkdir(r'%s\\Rusut' % this_path)
+if os.path.isdir("Result") == False:
+    os.mkdir(r'%s\\Result' % this_path)
 
 #判断是否存在本次扫描记录的testmac.txt
 #若存在则分别打开testmac.txt和total.txt文件，并分别导入数组list_mac_now和list_mac_total
@@ -89,8 +89,8 @@ mac_txt=open(listfile[int(user_select)],encoding = "utf-8")
     #print("\n请将扫描所得的MAC地址文本文件命名为testmac.txt后，与本程序放入同一目录下\n")
     #input("按回车结束程序")
     #exit()
-total_txt_re = open('%s\\Rusut\\total.txt' % this_path,'a')
-total_txt = open('%s\\Rusut\\total.txt' % this_path,'r')
+total_txt_re = open('%s\\Result\\total.txt' % this_path,'a')
+total_txt = open('%s\\Result\\total.txt' % this_path,'r')
 list_mac_now = mac_txt.read().replace(' ','').upper().split()
 list_mac_total=total_txt.read().replace(' ','').upper().split()
 
@@ -100,7 +100,7 @@ no_repeat_list=repeat_mac_total(newlist,list_mac_total)
 #print("%s OH,YES TOO" % no_repeat_list)
 
 #将本次对比后无语的MAC写入一份以时间命名的文件备份，并将其追加写入MAC地址统计表total.txt中
-new_txt=open('%s\\Rusut\\%s.txt' % (this_path,GetNowTime()) ,'a')
+new_txt=open('%s\\Result\\%s.txt' % (this_path,GetNowTime()) ,'a')
 for mac in no_repeat_list:
     new_txt.write("%s\n" % mac)
     total_txt_re.write("%s\n" % mac)
