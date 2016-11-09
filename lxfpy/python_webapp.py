@@ -7,13 +7,13 @@ from datetime import datetime
 from aiohttp import web
 
 def index(request):
-    return web.Response(body=b'<h1>Awesome</h1>',content_type = 'text/html', charset = 'UTF-8')
+    return web.Response(body=b'<h1>Awesome</h1>',content_type = 'text/html', charset = 'UTF-8') #需要使用content_type和charset来定义页面属性与编码类型，否则浏览器会出现解析异常
     
 @asyncio.coroutine
 def init(loop):
     app = web.Application(loop=loop)
     app.router.add_route('GET','/',index)
-    srv = yield from loop.create_server(app.make_handler(),'127.0.0.1',9000)
+    srv = yield from loop.create_server(app.make_handler(),'127.0.0.1',9000) #需调用的语句要写在 from 后
     logging.info('server started at http://127.0.0.1:9000...')
     return srv
     

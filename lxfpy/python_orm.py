@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+#创建连接池
 @asyncio.coroutine
 def create_pool(loop, **kw):
     logging.info('create database connection pool...')
