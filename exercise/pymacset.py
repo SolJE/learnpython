@@ -27,7 +27,7 @@ def repeat_mac_now(oldlist):
         print("""
         该文件中有 %s 个MAC地址重复
         """ % (len(oldlist)-len(mac_now_set)))
-        input("按回车结束程序")
+        input("按回车结束程序\n")
         exit()
 
     return mac_now_set
@@ -40,7 +40,7 @@ def repeat_mac_total(selfset,totallist):
         print("""
         与 \033[;31m 之前的出货 \033[0m  有 %s 个MAC 重复
         """ % repeat_count)
-        input("按回车结束程序")
+        input("按回车结束程序\n")
         exit()
 
     return selfset
@@ -68,8 +68,10 @@ for index,item in enumerate(listfile):
     %s    %s
     """ % (index,item))
 #file_list= listfile.split()
-if os.path.isdir("Result") == False:
-    os.mkdir(r'%s\\Result' % this_path)
+#if os.path.isdir("Result") == False:
+if os.path.isdir("C:\\Result") == False:
+    #os.mkdir(r'%s\\Result' % this_path)
+    os.mkdir(r"C:\\Result")
 
 #判断是否存在本次扫描记录的testmac.txt
 #若存在则分别打开testmac.txt和total.txt文件，并分别导入数组list_mac_now和list_mac_total
@@ -89,8 +91,8 @@ mac_txt=open(listfile[int(user_select)],encoding = "utf-8")
     #print("\n请将扫描所得的MAC地址文本文件命名为testmac.txt后，与本程序放入同一目录下\n")
     #input("按回车结束程序")
     #exit()
-total_txt_re = open('%s\\Result\\total.txt' % this_path,'a')
-total_txt = open('%s\\Result\\total.txt' % this_path,'r')
+total_txt_re = open('C:\\Result\\total.txt','a')
+total_txt = open('C:\\Result\\total.txt','r')
 list_mac_now = mac_txt.read().replace(' ','').upper().split()
 list_mac_total=total_txt.read().replace(' ','').upper().split()
 
@@ -100,7 +102,8 @@ no_repeat_list=repeat_mac_total(newlist,list_mac_total)
 #print("%s OH,YES TOO" % no_repeat_list)
 
 #将本次对比后无语的MAC写入一份以时间命名的文件备份，并将其追加写入MAC地址统计表total.txt中
-new_txt=open('%s\\Result\\%s.txt' % (this_path,GetNowTime()) ,'a')
+mac_number = len(no_repeat_list)
+new_txt=open('C:\\Result\\%s.txt' % GetNowTime() ,'a')
 for mac in no_repeat_list:
     new_txt.write("%s\n" % mac)
     total_txt_re.write("%s\n" % mac)
@@ -113,9 +116,9 @@ end=time.time()
 run_time=end-start
 print("""
     本次运行完成\n
-    未发现MAC地址重复\n
+    本次共对比 %d 个MAC地址，未发现重复\n
     用时：%f秒
-    """ % run_time)
+    """ % (mac_number,run_time))
 
-input("按回车结束程序")
+input("按回车结束程序\n")
 exit()
