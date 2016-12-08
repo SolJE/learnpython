@@ -30,7 +30,7 @@ def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,u
     tn.write(b"reboot\n")
     tn.write(b"exit\n")
     #print(tn.read_all().decode('ascii'))
-    print("\n\t修改成功！！！ :)\n")
+    print("\n\t修改成功！！！ (^O^)\n")
 
 def macaddress(mac):
     import re
@@ -74,7 +74,7 @@ while True:
                 telnetlogin()
             except Exception as e:
                 print ("\n\t",Exception,":",e)
-                print("\n\t操作失败 :(\n")
+                print("\n\t操作失败 -_-b\n")
         else:
             configlist = []
             config_txt = open("config.txt","r")
@@ -88,8 +88,8 @@ while True:
                 telnetlogin(host,user,password)
             except Exception as e:
                 print ("\n\t",Exception,":",e)
-                print("\n\t操作失败:(\n")
+                print("\n\t操作失败 -_-b\n")
 
     except Exception as e:
         #print (Exception,":",e)
-        print("\n\tMAC地址格式错误 :(\n")
+        print("\n\tMAC地址格式错误 -_-b\n")
