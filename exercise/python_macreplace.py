@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import os
 
 #引入telnet模块，通过telnet修改MAC地址
@@ -24,11 +26,11 @@ def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,u
     tn.write(b"iwpriv ra0 e2p 32=%s\n" % mac_32.encode('ascii'))
     
     #重启并退出
+    tn.write(b"ralink_init clear 2860\n")
     tn.write(b"reboot\n")
     tn.write(b"exit\n")
     print(tn.read_all().decode('ascii'))
-    input("Successe,Press Anykey to Quit")
-    exit()
+    print("修改成功！！！ :)")
 
 def macadress(mac):
     import re
@@ -55,28 +57,28 @@ def macadress(mac):
     return mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32
 
 #输入需修改的MAC地址    
-mac = input("Input Mac Adress:")
-mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 = macadress(mac)
+while True:
+    mac = input("请输MAC地址:>")
+    mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 = macadress(mac)
 
-#判断脚本所在目录是否存在config.txt文件
-if os.path.exists("config.txt") == False:
-    try:
-        telnetlogin()
-    except Exception as e:
-        print (Exception,":",e)
-        input("Fail,Press Anykey to Quit")
-        exit()
-else:
-    configlist = []
-    config_txt = open("config.txt","r")
-    for config in config_txt.readlines():
-        config = config.strip().replace("//n","")
-        configlist.append(config)
-    print (configlist)
-    try:
-        host,user,password = configlist
-        telnetlogin(host,user,password)
-    except Exception as e:
-        print (Exception,":",e)
-        input("Fail,Press Anykey to Quit")
-        exit()
+    #判断脚本所在目录是否存在config.txt文件
+
+    if os.path.exists("config.txt") == False:
+        try:
+            telnetlogin()
+        except Exception as e:
+            print (Exception,":",e)
+            print("\n操作失败:(\n")
+    else:
+        configlist = []
+        config_txt = open("config.txt","r")
+        for config in config_txt.readlines():
+            config = config.strip().replace("//n","")
+            configlist.append(config)
+        print (configlist)
+        try:
+            host,user,password = configlist
+            telnetlogin(host,user,password)
+        except Exception as e:
+            print (Exception,":",e)
+            print("\n操作失败:(\n")
