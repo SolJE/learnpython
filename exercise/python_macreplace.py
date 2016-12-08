@@ -29,56 +29,67 @@ def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,u
     tn.write(b"ralink_init clear 2860\n")
     tn.write(b"reboot\n")
     tn.write(b"exit\n")
-    print(tn.read_all().decode('ascii'))
-    print("修改成功！！！ :)")
+    #print(tn.read_all().decode('ascii'))
+    print("\n\t修改成功！！！ :)\n")
 
-def macadress(mac):
+def macaddress(mac):
     import re
     
     #将输入的MAC地址转为大写，并通过正则表达式按每两个字符分割为一个list
-    mac = mac.upper()
-    maclist = re.findall(r'.{2}',mac)
-    
-    #取MAC地址后8位用于计算LAN口及WAN口地址，并将所得字符串分割为List
-    mac_suffix = mac[-8:]
-    mac_lan = hex((int(mac_suffix,base=16)+2))[-8:].replace("x","0").upper()
-    mac_lan_list = re.findall(r'.{2}',mac_lan)
-    mac_wan = hex((int(mac_suffix,base=16)+3))[-8:].replace("x","0").upper()
-    mac_wan_list = re.findall(r'.{2}',mac_wan)
-    
-    #确定MAC地址每一位的值
-    mac_04_28_2E = maclist[1]+maclist[0]
-    mac_06 = maclist[3]+maclist[2]
-    mac_08 = maclist[5]+maclist[4]
-    mac_2A = mac_lan_list[1]+mac_lan_list[0]
-    mac_2C = mac_lan_list[3]+mac_lan_list[2]
-    mac_30 = mac_wan_list[1]+mac_wan_list[0]
-    mac_32 = mac_wan_list[3]+mac_wan_list[2]
-    return mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32
+    mac = mac.upper().replace(' ','')
+    if len(mac) == 12:
+        maclist = re.findall(r'.{2}',mac)
+        
+        #取MAC地址后8位用于计算LAN口及WAN口地址，并将所得字符串分割为List
+        mac_pre = int(mac[:4],base=16)
+        mac_suffix = mac[-8:]
+        mac_lan = hex((int(mac_suffix,base=16)+2))[-8:].replace("x","0").upper()
+        mac_lan_list = re.findall(r'.{2}',mac_lan)
+        mac_wan = hex((int(mac_suffix,base=16)+3))[-8:].replace("x","0").upper()
+        mac_wan_list = re.findall(r'.{2}',mac_wan)
+        
+        #确定MAC地址每一位的值
+        mac_04_28_2E = maclist[1]+maclist[0]
+        mac_06 = maclist[3]+maclist[2]
+        mac_08 = maclist[5]+maclist[4]
+        mac_2A = mac_lan_list[1]+mac_lan_list[0]
+        mac_2C = mac_lan_list[3]+mac_lan_list[2]
+        mac_30 = mac_wan_list[1]+mac_wan_list[0]
+        mac_32 = mac_wan_list[3]+mac_wan_list[2]
+        return mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32
+        
+    else:
+        print("\n\tMAC地址位数不对")
 
 #输入需修改的MAC地址    
 while True:
     mac = input("请输MAC地址:>")
-    mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 = macadress(mac)
+    try:
+        mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 = macaddress(mac)
 
     #判断脚本所在目录是否存在config.txt文件
 
-    if os.path.exists("config.txt") == False:
-        try:
-            telnetlogin()
-        except Exception as e:
-            print (Exception,":",e)
-            print("\n操作失败:(\n")
-    else:
-        configlist = []
-        config_txt = open("config.txt","r")
-        for config in config_txt.readlines():
-            config = config.strip().replace("//n","")
-            configlist.append(config)
-        print (configlist)
-        try:
-            host,user,password = configlist
-            telnetlogin(host,user,password)
-        except Exception as e:
-            print (Exception,":",e)
-            print("\n操作失败:(\n")
+        if os.path.exists("config.txt") == False:
+            try:
+                telnetlogin()
+            except Exception as e:
+                print ("\n\t",Exception,":",e)
+                print("\n\t操作失败 :(\n")
+        else:
+            configlist = []
+            config_txt = open("config.txt","r")
+            for config in config_txt.readlines():
+                config = config.strip().replace("//n","")
+                configlist.append(config)
+            print (configlist)
+            
+            try:
+                host,user,password = configlist
+                telnetlogin(host,user,password)
+            except Exception as e:
+                print ("\n\t",Exception,":",e)
+                print("\n\t操作失败:(\n")
+                
+    except Exception as e:
+        #print (Exception,":",e)
+        print("\n\tMAC地址格式错误 :(\n")
