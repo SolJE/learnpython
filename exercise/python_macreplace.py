@@ -1,10 +1,11 @@
+import os
 
 #引入telnet模块，通过telnet修改MAC地址
-def telnetlogin_default(host="192.168.169.1",usre="root",password="admin"):#设置host,user,password的默认参数方便使用
+def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,user,password的默认参数方便使用
     import telnetlib
     
     #登陆host
-    tn = telnetlib.Telnet(HOST)
+    tn = telnetlib.Telnet(host)
     tn.read_until(b"login: ")
     tn.write(user.encode('ascii') + b"\n")
     if password:
@@ -26,33 +27,8 @@ def telnetlogin_default(host="192.168.169.1",usre="root",password="admin"):#设�
     tn.write(b"reboot\n")
     tn.write(b"exit\n")
     print(tn.read_all().decode('ascii'))
-
-def telnetlogin_custom(host="192.168.169.1",usre="root",password="admin"):#设置host,user,password的默认参数方便使用
-    import telnetlib
-    
-    #登陆host
-    tn = telnetlib.Telnet(HOST)
-    tn.read_until(b"login: ")
-    tn.write(user.encode('ascii') + b"\n")
-    if password:
-        tn.read_until(b"Password: ")
-        tn.write(password.encode('ascii') + b"\n")
-        
-    #修改mac地址
-    tn.write(b"iwpriv ra0 e2p 4=%s\n" % mac_04_28_2E.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 6=%s\n" % mac_06.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 8=%s\n" % mac_08.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 28=%s\n" % mac_04_28_2E.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 2A=%s\n" % mac_2A.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 2C=%s\n" % mac_2C.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 2E=%s\n" % mac_04_28_2E.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 30=%s\n" % mac_30.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 32=%s\n" % mac_32.encode('ascii'))
-    
-    #重启并退出
-    tn.write(b"reboot\n")
-    tn.write(b"exit\n")
-    print(tn.read_all().decode('ascii'))    
+    input("Successe,Press Anykey to Quit")
+    exit()
 
 def macadress(mac):
     import re
@@ -82,9 +58,25 @@ def macadress(mac):
 mac = input("Input Mac Adress:")
 mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 = macadress(mac)
 
-#输入host信息
-HOST = input("HOST IP>:")
-user = input("user >:")
-password = input("password >:")
-if HOST == None:
-    telnetlogin(host="192.168.169.1",usre="root",password="admin")
+#判断脚本所在目录是否存在config.txt文件
+if os.path.exists("config.txt") == False:
+    try:
+        telnetlogin()
+    except Exception as e:
+        print (Exception,":",e)
+        input("Fail,Press Anykey to Quit")
+        exit()
+else:
+    configlist = []
+    config_txt = open("config.txt","r")
+    for config in config_txt.readlines():
+        config = config.strip().replace("//n","")
+        configlist.append(config)
+    print (configlist)
+    try:
+        host,user,password = configlist
+        telnetlogin(host,user,password)
+    except Exception as e:
+        print (Exception,":",e)
+        input("Fail,Press Anykey to Quit")
+        exit()
