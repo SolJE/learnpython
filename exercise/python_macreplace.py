@@ -42,30 +42,32 @@ def macaddress(mac):
 
         #取MAC地址后8位用于计算LAN口及WAN口地址，并将所得字符串分割为List
         mac_pre = int(mac[:4],base=16)
-        mac_suffix = mac[-8:]
-        mac_lan = hex((int(mac_suffix,base=16)+2))[-8:].replace("x","0").upper()
-        while len(mac_lan) < 8:
-            mac_lan = "0"+ mac_lan
-        mac_lan_list = re.findall(r'.{2}',mac_lan)
-        print(mac[:4],mac_lan_list)
-        mac_wan = hex((int(mac_suffix,base=16)+3))[-8:].replace("x","0").upper()
-        while len(mac_wan) < 8:
-            mac_wan = "0"+ mac_wan
-        mac_wan_list = re.findall(r'.{2}',mac_wan)
-        print(mac[:4],mac_wan_list)
+        mac_suffix = int(mac[-6:],16)
+        if mac_suffix <= 16777212:
+            mac_lan = hex(mac_suffix + 2)[-6:].replace("x","0").upper()
+            while len(mac_lan) < 6:
+                mac_lan = "0"+ mac_lan
+            mac_lan_list = re.findall(r'.{2}',mac_lan)
+            print(mac[:6],mac_lan_list)
+            mac_wan = hex(mac_suffix + 3)[-6:].replace("x","0").upper()
+            while len(mac_wan) < 6:
+                mac_wan = "0"+ mac_wan
+            mac_wan_list = re.findall(r'.{2}',mac_wan)
+            print(mac[:6],mac_wan_list)
 
-        #确定MAC地址每一位的值
-        mac_04_28_2E = maclist[1]+maclist[0]
-        mac_06 = maclist[3]+maclist[2]
-        mac_08 = maclist[5]+maclist[4]
-        mac_2A = mac_lan_list[1]+mac_lan_list[0]
-        mac_2C = mac_lan_list[3]+mac_lan_list[2]
-        mac_30 = mac_wan_list[1]+mac_wan_list[0]
-        mac_32 = mac_wan_list[3]+mac_wan_list[2]
-        return mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32
-
+            #确定MAC地址每一位的值
+            mac_04_28_2E = maclist[1]+maclist[0]
+            mac_06 = maclist[3]+maclist[2]
+            mac_08 = maclist[5]+maclist[4]
+            mac_2A = mac_lan_list[0]+maclist[2]
+            mac_2C = mac_lan_list[2]+mac_lan_list[1]
+            mac_30 = mac_wan_list[0]+maclist[2]
+            mac_32 = mac_wan_list[2]+mac_wan_list[1]
+            return mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32
+        else:
+            print("\n\tMAC已超出可用范围，后六位最大允许FFFFFC ^-^ \n")
     else:
-        pass
+        print("\n\tMAC位数错误，总位数应为12位\n")
 
 #输入需修改的MAC地址
 while True:
@@ -88,6 +90,7 @@ while True:
                 config = config.strip().replace("//n","")
                 configlist.append(config)
             print (configlist)
+            config_txt.close()
 
             try:
                 host,user,password = configlist
@@ -98,4 +101,4 @@ while True:
 
     except Exception as e:
         #print (Exception,":",e)
-        print("\n\tMAC地址格式错误 -_-b\n")
+        print("\n\t操作失败 -_-b\n")
