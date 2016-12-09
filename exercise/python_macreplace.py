@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import os
+import time
 
 #引入telnet模块，通过telnet修改MAC地址
 def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,user,password的默认参数方便使用
@@ -65,19 +66,21 @@ def macaddress(mac):
             mac_32 = mac_wan_list[2]+mac_wan_list[1]
             return mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32
         else:
-            print("\n\tMAC已超出可用范围，后六位最大允许FFFFFC ^-^ \n")
+            print("\n\tMAC已超出可用范围，后六位最大允许FFFFFC")
     else:
-        print("\n\tMAC位数错误，总位数应为12位\n")
+        print("\n\tMAC位数错误，总位数应为12位")
 
 #输入需修改的MAC地址
 while True:
     mac = input("请输MAC地址:>")
+    start = time.time()
     try:
         mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 = macaddress(mac)
 
     #判断脚本所在目录是否存在config.txt文件
 
         if os.path.exists("config.txt") == False:
+            print("使用默认参数连接")
             try:
                 telnetlogin()
             except Exception as e:
@@ -89,7 +92,7 @@ while True:
             for config in config_txt.readlines():
                 config = config.strip().replace("//n","")
                 configlist.append(config)
-            print (configlist)
+            print ("自定义参数连接：",configlist)
             config_txt.close()
 
             try:
@@ -102,3 +105,5 @@ while True:
     except Exception as e:
         #print (Exception,":",e)
         print("\n\t操作失败 -_-b\n")
+    end = time.time()
+    print("\t%.2f秒" % (end-start))
