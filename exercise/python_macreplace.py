@@ -44,9 +44,15 @@ def macaddress(mac):
         mac_pre = int(mac[:4],base=16)
         mac_suffix = mac[-8:]
         mac_lan = hex((int(mac_suffix,base=16)+2))[-8:].replace("x","0").upper()
+        while len(mac_lan) < 8:
+            mac_lan = "0"+ mac_lan
         mac_lan_list = re.findall(r'.{2}',mac_lan)
+        print(mac[:4],mac_lan_list)
         mac_wan = hex((int(mac_suffix,base=16)+3))[-8:].replace("x","0").upper()
+        while len(mac_wan) < 8:
+            mac_wan = "0"+ mac_wan
         mac_wan_list = re.findall(r'.{2}',mac_wan)
+        print(mac[:4],mac_wan_list)
 
         #确定MAC地址每一位的值
         mac_04_28_2E = maclist[1]+maclist[0]
