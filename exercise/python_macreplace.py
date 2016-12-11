@@ -42,7 +42,7 @@ def macaddress(mac):
         maclist = re.findall(r'.{2}',mac)
 
         #取MAC地址后8位用于计算LAN口及WAN口地址，并将所得字符串分割为List
-        mac_pre = int(mac[:4],base=16)
+        mac_pre = int(mac[:6],base=16)
         mac_suffix = int(mac[-6:],16)
         if mac_suffix <= 16777212:
             mac_lan = hex(mac_suffix + 2)[-6:].replace("x","0").upper()
@@ -103,7 +103,7 @@ while True:
                 print("\n\t操作失败 -_-b\n")
 
     except Exception as e:
-        #print (Exception,":",e)
+        print ("\n\t",Exception,":",e)
         print("\n\t操作失败 -_-b\n")
     end = time.time()
     print("\t%.2f秒" % (end-start))
