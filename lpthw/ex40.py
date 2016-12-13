@@ -1,3 +1,5 @@
+import pdb
+
 class Song(object):
 
     def __init__(self,lyrics):
@@ -6,7 +8,7 @@ class Song(object):
     def sing_me_a_song(self):
         for line in self.lyrics:
             print(line)
-			
+pdb.set_trace()
 happy_bday = Song(["Happy birthday to you",
 "I don't want to get sued",
 "So I'll stop right there"])
