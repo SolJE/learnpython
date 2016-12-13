@@ -76,7 +76,38 @@
     </rect>
    </property>
   </widget>
+  <zorder>status_lineEdit</zorder>
+  <zorder>replace_Button</zorder>
+  <zorder>runtime_lineEdit</zorder>
+  <zorder>lineEdit</zorder>
+  <zorder>result_textEdit</zorder>
+  <zorder>mac_lineEdit</zorder>
  </widget>
+ <tabstops>
+  <tabstop>mac_lineEdit</tabstop>
+  <tabstop>status_lineEdit</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>runtime_lineEdit</tabstop>
+  <tabstop>replace_Button</tabstop>
+  <tabstop>result_textEdit</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>mac_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>replace_Button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>46</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
