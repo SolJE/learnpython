@@ -99,6 +99,8 @@ while True:
                 host,user,password = configlist
                 telnetlogin(host,user,password)
             except Exception as e:
+                #exce = str(Exception,":",e)
+                #print (exce)
                 print ("\n\t",Exception,":",e)
                 print("\n\t操作失败 -_-b\n")
 

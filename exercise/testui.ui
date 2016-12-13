@@ -13,27 +13,69 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLineEdit" name="status_lineEdit"/>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="result_lineEdit"/>
-   </item>
-   <item>
-    <widget class="QTextEdit" name="mac_textEdit"/>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="runtime_lineEdit"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="replace_Button">
-     <property name="text">
-      <string>Replace</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <widget class="QLineEdit" name="status_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>190</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="replace_Button">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>268</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Replace</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="runtime_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>242</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>216</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="mac_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="result_textEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>381</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

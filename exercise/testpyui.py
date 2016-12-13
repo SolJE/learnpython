@@ -2,31 +2,31 @@ from PyQt5 import QtWidgets,uic
 import sys
 import os
 import time
-import telnetlib
-#from testui import Ui_MainWindow  
+
+#from testui import Ui_MainWindow
 
 
 #qtCreatorFile = "testui.ui" # Enter file here.
- 
+
 Ui_MainWindow, QtBaseClass = uic.loadUiType("testui.ui")
 
-  
-class mywindow(QtWidgets.QWidget,Ui_MainWindow):  
+
+class mywindow(QtWidgets.QWidget,Ui_MainWindow):
     def __init__(self):
         #self.macaddress()
         #self.replace()
         #self.telnetlogin()
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
-        self.setupUi(self)  
+        self.setupUi(self)
     def replace(self):
-        #mac = myshow.mac_textEdit.toPlainText()
-        mac = input(">>>:")
+        #mac = myshow.mac_lineEdit.toPlainText()
+        mac = myshow.mac_lineEdit.text()
         start = time.time()
-        myshow.result_lineEdit.setText("正在修改。。。")
+        myshow.result_textEdit.setText("正在修改。。。")
         #time.sleep(5)
         try:
-            myshow.result_lineEdit.setText("正在修改。。。")
+            myshow.result_textEdit.setText("正在修改。。。")
             #time.sleep(2)
             mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 =mywindow.macaddress(mac)
         #判断脚本所在目录是否存在config.txt文件
@@ -39,7 +39,9 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
                 except Exception as e:
                     #print ("\n\t",Exception,":",e)
                     #print("\n\t操作失败 -_-b\n")
-                    myshow.result_lineEdit.setText("操作失败1")
+                    exce = Exception,":",e
+                    exce = str(exce)
+                    myshow.result_textEdit.setText(exce)
             else:
                 configlist = []
                 config_txt = open("config.txt","r")
@@ -52,33 +54,38 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
                 try:
                     #time.sleep(5)
                     host,user,password = configlist
-                    myshow.status_lineEdit.setText(host+user+password)
+
                     #time.sleep(5)
                     mywindow.telnetlogin(host,user,password)
                 except Exception as e:
                     #print ("\n\t",Exception,":",e)
                     #print("\n\t操作失败 -_-b\n")
-                    myshow.result_lineEdit.setText("操作失败2")
+                    exce = Exception,":",e
+                    exce = str(exce)
+                    myshow.result_textEdit.setText(exce)
 
         except Exception as e:
             #print ("\n\t",Exception,":",e)
             #print("\n\t操作失败 -_-b\n")
-            myshow.result_lineEdit.setText("")
+            exce = Exception,":",e
+            exce = str(exce)
+            myshow.result_textEdit.setText(exce+"\n 请检查MAC地址")
         end = time.time()
         runtime = "\t%.2f秒" % (end-start)
         myshow.runtime_lineEdit.setText(runtime)
-            
-    def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,user,password的默认参数方便使用
-        
 
+    def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,user,password的默认参数方便使用
+
+        import telnetlib
         #登陆host
-        myshow.result_lineEdit.setText(host)
+        myshow.status_lineEdit.setText(";"+";")
         tn = telnetlib.Telnet(host)
+        myshow.status_lineEdit.setText(host+";"+user+";"+password)
         #time.sleep(5)
         tn.read_until(b"login: ")
-        myshow.result_lineEdit.setText(user)
+
         tn.write(user.encode('ascii') + b"\n")
-        
+
         if password:
             tn.read_until(b"Password: ")
             tn.write(password.encode('ascii') + b"\n")
@@ -139,16 +146,15 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
         else:
             #print("\n\tMAC位数错误，总位数应为12位")
             pass
-        
-        
-if __name__=="__main__":  
+
+
+if __name__=="__main__":
 
     app=QtWidgets.QApplication(sys.argv)
     myshow=mywindow()
-    
-    mywindow.replace
-    #myshow.show()
-    myshow.result_lineEdit.setText("what?")
-    myshow.result_lineEdit.setText("yes?")
+
+    myshow.replace_Button.clicked.connect(mywindow.replace)
+    myshow.show()
+    myshow.result_textEdit.setText("what?")
+    myshow.result_textEdit.setText("yes?")
     sys.exit(app.exec_())
-    
