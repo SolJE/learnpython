@@ -13,16 +13,27 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>100</y>
-     <width>113</width>
-     <height>20</height>
-    </rect>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLineEdit" name="status_lineEdit"/>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="result_lineEdit"/>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="mac_textEdit"/>
+   </item>
+   <item>
+    <widget class="QLineEdit" name="runtime_lineEdit"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="replace_Button">
+     <property name="text">
+      <string>Replace</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
