@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="status_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>190</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="replace_Button">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>268</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Replace</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="runtime_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>242</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>216</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="mac_lineEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>381</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="result_textEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>381</width>
+     <height>131</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>status_lineEdit</zorder>
+  <zorder>replace_Button</zorder>
+  <zorder>runtime_lineEdit</zorder>
+  <zorder>lineEdit</zorder>
+  <zorder>result_textEdit</zorder>
+  <zorder>mac_lineEdit</zorder>
+ </widget>
+ <tabstops>
+  <tabstop>mac_lineEdit</tabstop>
+  <tabstop>status_lineEdit</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>runtime_lineEdit</tabstop>
+  <tabstop>replace_Button</tabstop>
+  <tabstop>result_textEdit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>mac_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>replace_Button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>29</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>46</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
