@@ -2,6 +2,8 @@
 
 import os
 import time
+import getpass
+import sys
 
 #引入telnet模块，通过telnet修改MAC地址
 def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,user,password的默认参数方便使用
@@ -9,29 +11,33 @@ def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,u
 
     #登陆host
     tn = telnetlib.Telnet(host)
-    tn.read_until(b"login: ")
-    tn.write(user.encode('ascii') + b"\n")
-    if password:
-        tn.read_until(b"Password: ")
-        tn.write(password.encode('ascii') + b"\n")
+    try:
+        tn.read_until(b"login: ")
+        tn.write(user.encode('ascii') + b"\n")
+        if password:
+            tn.read_until(b"Password: ")
+            tn.write(password.encode('ascii') + b"\n")
 
-    #修改mac地址
-    tn.write(b"iwpriv ra0 e2p 4=%s\n" % mac_04_28_2E.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 6=%s\n" % mac_06.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 8=%s\n" % mac_08.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 28=%s\n" % mac_04_28_2E.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 2A=%s\n" % mac_2A.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 2C=%s\n" % mac_2C.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 2E=%s\n" % mac_04_28_2E.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 30=%s\n" % mac_30.encode('ascii'))
-    tn.write(b"iwpriv ra0 e2p 32=%s\n" % mac_32.encode('ascii'))
+            #修改mac地址
+            tn.write(b"iwpriv ra0 e2p 4=%s\n" % mac_04_28_2E.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 6=%s\n" % mac_06.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 8=%s\n" % mac_08.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 28=%s\n" % mac_04_28_2E.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 2A=%s\n" % mac_2A.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 2C=%s\n" % mac_2C.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 2E=%s\n" % mac_04_28_2E.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 30=%s\n" % mac_30.encode('ascii'))
+            tn.write(b"iwpriv ra0 e2p 32=%s\n" % mac_32.encode('ascii'))
 
-    #重启并退出
-    tn.write(b"ralink_init clear 2860\n")
-    tn.write(b"reboot\n")
-    tn.write(b"exit\n")
-    #print(tn.read_all().decode('ascii'))
-    print("\n\t修改成功！！！ (^O^)\n")
+            #重启并退出
+            tn.write(b"ralink_init clear 2860\n")
+            tn.write(b"reboot\n")
+            tn.write(b"exit\n")
+            print(tn.read_all().decode('ascii'))
+            print("\n\t修改成功！！！ (^O^)\n")
+    except Exception as e:
+        print ("\n\t",Exception,":",e)
+        print("\n\t写入失败 -_-b\n")
 
 def macaddress(mac):
     import re

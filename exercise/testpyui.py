@@ -29,6 +29,7 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
             myshow.result_textEdit.setText("正在修改。。。")
             #time.sleep(2)
             mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 =mywindow.macaddress(mac)
+            myshow.lineEdit.setText(mac_04_28_2E)
         #判断脚本所在目录是否存在config.txt文件
 
             if os.path.exists("config.txt") == False:
