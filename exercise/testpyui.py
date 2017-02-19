@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets,uic
+from PyQt5 import QtWidgets, uic
 import sys
 import os
 import time
@@ -6,12 +6,12 @@ import time
 #from testui import Ui_MainWindow
 
 
-#qtCreatorFile = "testui.ui" # Enter file here.
+qtCreatorFile = "testui.ui" # Enter file here.
 
-Ui_MainWindow, QtBaseClass = uic.loadUiType("testui.ui")
+Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 
-class mywindow(QtWidgets.QWidget,Ui_MainWindow):
+class mywindow(QtWidgets.QWidget, Ui_MainWindow):
     def __init__(self):
         #self.macaddress()
         #self.replace()
@@ -26,13 +26,13 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
         myshow.result_textEdit.setText("正在修改。。。")
         #time.sleep(5)
         try:
-            myshow.result_textEdit.setText("正在修改。。。")
+            myshow.result_textEdit.setText(mac)
             #time.sleep(2)
-            mac_04_28_2E,mac_06,mac_08,mac_2A,mac_2C,mac_30,mac_32 =mywindow.macaddress(mac)
+            mac_04_28_2E, mac_06, mac_08, mac_2A, mac_2C, mac_30, mac_32 = mywindow.macaddress(self, mac)
             myshow.lineEdit.setText(mac_04_28_2E)
         #判断脚本所在目录是否存在config.txt文件
 
-            if os.path.exists("config.txt") == False:
+            if os.path.exists("config.txt") is False:
                 #print("使用默认参数连接")
                 try:
                     mywindow.telnetlogin()
@@ -40,28 +40,28 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
                 except Exception as e:
                     #print ("\n\t",Exception,":",e)
                     #print("\n\t操作失败 -_-b\n")
-                    exce = Exception,":",e
+                    exce = Exception, ":", e
                     exce = str(exce)
                     myshow.result_textEdit.setText(exce)
             else:
                 configlist = []
-                config_txt = open("config.txt","r")
+                config_txt = open("config.txt", "r")
                 for config in config_txt.readlines():
-                    config = config.strip().replace("//n","")
+                    config = config.strip().replace("//n", "")
                     configlist.append(config)
                 #print ("自定义参数连接：",configlist)
                 config_txt.close()
 
                 try:
                     #time.sleep(5)
-                    host,user,password = configlist
+                    host, user, password = configlist
 
                     #time.sleep(5)
-                    mywindow.telnetlogin(host,user,password)
+                    mywindow.telnetlogin(host, user, password)
                 except Exception as e:
                     #print ("\n\t",Exception,":",e)
                     #print("\n\t操作失败 -_-b\n")
-                    exce = Exception,":",e
+                    exce = Exception, ":", e
                     exce = str(exce)
                     myshow.result_textEdit.setText(exce)
 
@@ -75,7 +75,8 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
         runtime = "\t%.2f秒" % (end-start)
         myshow.runtime_lineEdit.setText(runtime)
 
-    def telnetlogin(host="192.168.169.1",user="root",password="admin"):#设置host,user,password的默认参数方便使用
+    def telnetlogin(host="192.168.169.1", user="root", password="admin"):
+        #设置host,user,password的默认参数方便使用
 
         import telnetlib
         #登陆host
@@ -109,7 +110,7 @@ class mywindow(QtWidgets.QWidget,Ui_MainWindow):
         #print(tn.read_all().decode('ascii'))
         #print("\n\t修改成功！！！ (^O^)\n")
 
-    def macaddress(mac):
+    def macaddress(self, mac):
         import re
 
         #将输入的MAC地址转为大写，并通过正则表达式按每两个字符分割为一个list
